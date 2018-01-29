@@ -21,7 +21,7 @@ This will install all necessary packages for the app. (Dependencies are included
 Create a 'products' table and insert dummy data in it.
 ```
 CREATE TABLE products ( 
-        item_id int NOT NULL AUTO_INCREMENT,
+    item_id int NOT NULL AUTO_INCREMENT,
     product_name VARCHAR(100) NULL,
     department_name VARCHAR(100),
     price DECIMAL(13,2) NULL,
