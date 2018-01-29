@@ -17,11 +17,11 @@ connection.connect(function(err) {
 
 function displayItems() {
 	var data, output, dataRow;
-	data = [['ITEM #', 'ITEM NAME', 'DEPARTMENT', 'PRICE', 'QUANTITY']];
+	data = [['ITEM #', 'ITEM NAME', 'PRICE']];
 	var query = 'SELECT * FROM products';
 	connection.query(query, function(err, res) {
 	    for (var i = 0; i < res.length; i++) {
-	      dataRow = [res[i].item_id, res[i].product_name, res[i].department_name, '$' + res[i].price, res[i].stock_quantity];
+	      dataRow = [res[i].item_id, res[i].product_name, '$' + res[i].price];
 	      data.push(dataRow);
 	    }
 	    output = table(data);
