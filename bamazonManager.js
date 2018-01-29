@@ -129,7 +129,7 @@ function addProduct() {
 			{
 				type: 'list',
 				message: 'Choose a department:',
-				choices: ['Clothing & Shoes', 'Books & Audible', 'CDs & Vinyl', 'Electronics & Coputers', 'Sports & Outdoors'],
+				choices: ['Clothing & Shoes', 'Books & Audible', 'CDs & Vinyl', 'Electronics & Computers', 'Sports & Outdoors'],
 				name: 'choice'
 			},
 			{
