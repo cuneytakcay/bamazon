@@ -1,0 +1,17 @@
+{
+  "name": "bamazon-customer",
+  "version": "1.0.0",
+  "description": "App that take in orders from customers and deplete stock from the database",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cuneyt Akcay",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^5.0.1",
+    "mocha": "^5.0.0",
+    "mysql": "^2.15.0",
+    "table": "^4.0.2"
+  }
+}
