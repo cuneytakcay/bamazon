@@ -1,6 +1,8 @@
 # bamazon
 Amazon-like storefront using MySQL. The app takes in orders from customers and depletes stock from the store's inventory. 
 
+[Watch the app in action](https://youtu.be/NZt_EE6H4Mk)
+
 ## Install
 
 Following Node packages must be installed before using the program:
