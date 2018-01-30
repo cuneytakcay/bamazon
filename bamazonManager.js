@@ -56,7 +56,7 @@ function viewProducts() {
 	    output = table(data);
 	    console.log('\nPRODUCTS FOR SALE');
 	    console.log(output);
-	    // Display menu for new selection
+	    
 	    continueProcess();
 	});
 }
@@ -79,7 +79,7 @@ function viewLowInv() {
 	    } else {
 	    	console.log(output);
 	    }
-	    // Display menu for new selection
+	    
 	    continueProcess();
 	});
 }
@@ -112,7 +112,7 @@ function addToInv() {
 				con.connection.query(query_2, [newQuantity, answer.item], function(err, res) {
 					if (err) throw err;
 					console.log('\nStock inventory updated.\n');
-					// Display menu for new selection
+					
 	    			continueProcess();
 				});
 			});
@@ -151,7 +151,7 @@ function addProduct() {
 			con.connection.query(query, [answer.name, answer.choice, answer.price, answer.quantity], function(err, res) {
 				if (err) throw err;
 				console.log('\nNew item added\n');
-				// Display menu for new selection
+				
 	    		continueProcess();
 			});
 		});
