@@ -1,25 +1,25 @@
-var mysql = require('mysql');
+// Use required node packages
 var inquirer = require("inquirer");
 var {table} = require('table');
+// Use constructor module
+var Connection = require('./connectionModule.js');
 
-var connection = mysql.createConnection({
-	host: 'localhost',
-	port: 3306,
-	user: 'root',
-	password: '',
-	database: 'bamazon'
-});
+// Initialize instance of object
+var con = new Connection();
 
-connection.connect(function(err) {
+// Start the connection with the database and display menu options
+con.connection.connect(function(err) {
 	if (err) throw err;
 	displayItems();
 });
 
+// Display products for sale 
 function displayItems() {
 	var data, output, dataRow;
 	data = [['ITEM #', 'ITEM NAME', 'PRICE']];
 	var query = 'SELECT * FROM products';
-	connection.query(query, function(err, res) {
+	con.connection.query(query, function(err, res) {
+		if (err) throw err;
 	    for (var i = 0; i < res.length; i++) {
 	      dataRow = [res[i].item_id, res[i].product_name, '$' + res[i].price];
 	      data.push(dataRow);
@@ -30,6 +30,7 @@ function displayItems() {
 	});
 }
 
+// Prompt purchase questions
 function runSearch() {
 	inquirer
 		.prompt([
@@ -49,15 +50,18 @@ function runSearch() {
 		});
 }
 
+// Start the purchase process of the selected item
 function selectProduct(item, unit) {
 	var price, quantity;
 	var query = 'SELECT * FROM products WHERE item_id=?';
-	connection.query(query, [item], function(err, res) {
+	con.connection.query(query, [item], function(err, res) {
+		if (err) throw err;
 		for (var i = 0; i < res.length; i++) {
 			price = res[i].price;
 			quantity = res[i].stock_quantity;
 			if (unit > quantity) {
-				console.log('Sorry, we have only ' + quantity +' in the stock.');
+				console.log('\nSorry, we have only ' + quantity +' in the stock.\n');
+				continueProcess();
 			} else {
 				updateProduct(item, unit, price, quantity);
 			}
@@ -65,10 +69,33 @@ function selectProduct(item, unit) {
 	});
 }
 
+// Update the inventory with the new quantity
 function updateProduct(iID, iUnit, iPrice, iQuantity) {
 	var newQuantity = iQuantity - iUnit;
 	var query = 'UPDATE products SET stock_quantity=? WHERE item_id=?';
-	connection.query(query, [newQuantity, iID], function(err, res) {
-		console.log('Total cost of your purchase: $' + (iUnit * iPrice));
+	con.connection.query(query, [newQuantity, iID], function(err, res) {
+		if (err) throw err;
+		console.log('\nTotal cost of your purchase: $' + (iUnit * iPrice) + '\n');
+		continueProcess();
 	});
+}
+
+// Function that decides if the process will continue or end.
+function continueProcess() {
+	inquirer
+		.prompt([
+			{
+				type: 'confirm',
+				message: 'Do you want to continue shopping?',
+				name: 'name',
+				default: true
+			}
+		])
+		.then(function(answer) { 
+			if (answer.name) {
+				runSearch();
+			} else {
+				con.connection.end();
+			}
+		});
 }
